@@ -3,8 +3,6 @@ package com.duckcoffee.app.controller;
 
 import com.duckcoffee.app.entity.User;
 import com.duckcoffee.app.service.MemberService;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,10 +19,10 @@ import java.util.Map;
 @RequestMapping(path = "/auth/member")
 public class MemberController {
 
-    @Autowired
+
     public MemberService memberService;
 
-    @Autowired
+
     public AuthenticationManager authenticationManager;
 
     @PostMapping(path = "/register")
