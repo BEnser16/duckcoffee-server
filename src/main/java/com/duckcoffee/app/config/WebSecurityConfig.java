@@ -31,7 +31,7 @@ public class WebSecurityConfig {
         return provider;
     }
 
-    // 認證管理器
+    // 認證管理器 控制
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration authenticationConfiguration
@@ -48,5 +48,5 @@ public class WebSecurityConfig {
         });
 
         return http.build();
-    };
+    }
 }
