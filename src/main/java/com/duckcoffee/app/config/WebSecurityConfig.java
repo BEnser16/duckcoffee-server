@@ -30,7 +30,10 @@ public class WebSecurityConfig {
 
         return provider;
     }
-
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
     // 認證管理器 控制
     @Bean
     public AuthenticationManager authenticationManager(
@@ -42,11 +45,13 @@ public class WebSecurityConfig {
     // 定義 api 輸入規則
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
+        http.csrf((csrf) -> csrf.disable());
         http.authorizeHttpRequests((authorize) -> {
-            authorize.requestMatchers("/auth*").authenticated().anyRequest().permitAll();
+            authorize.requestMatchers("/auth/**").authenticated().anyRequest().permitAll();
         });
 
         return http.build();
     }
+
+
 }

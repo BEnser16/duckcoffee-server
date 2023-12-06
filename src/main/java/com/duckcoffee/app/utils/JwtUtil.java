@@ -3,6 +3,9 @@ package com.duckcoffee.app.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -14,15 +17,26 @@ import java.util.function.Function;
 @Component
 public class JwtUtil {
 
-    // create secretKey using HS512
-    SecretKey secretKey = Jwts.SIG.HS512.key().build();
+    @Value("${jwt.secret}")
+    private String mySecretKey;
+
+    @Value("${jwt.expire_time}")
+    private int expireTime;
+
+    private SecretKey secretKey;
+
+    @PostConstruct
+    public void init() {
+        this.secretKey = Jwts.SIG.HS512.key().build();
+    }
+
 
     public String generateToken(
             Map<String , String> claims ,
             String subject , String jti
     ) {
         // 設定 token expire time 單位分鐘
-        int expireSecond = 1800 * 1000;
+        int expireSecond = expireTime * 1000;
         Date expireDate = new Date(System.currentTimeMillis() + expireSecond);
 
         // 使用 uuid 產生 random id for jwt id

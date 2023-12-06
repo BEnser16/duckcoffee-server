@@ -25,7 +25,7 @@ public class DatabaseUserDetailService implements UserDetailsService {
         }
 
         return new org.springframework.security.core.userdetails.User(
-                dbUser.getName(),
+                dbUser.getEmail(),
                 dbUser.getPassword(),
                 Collections.emptyList()
         );
