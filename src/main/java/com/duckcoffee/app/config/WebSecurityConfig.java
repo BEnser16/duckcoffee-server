@@ -13,6 +13,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+
+import java.util.Arrays;
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
@@ -42,6 +45,7 @@ public class WebSecurityConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
+
     // 定義 api 輸入規則
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -49,7 +53,6 @@ public class WebSecurityConfig {
         http.authorizeHttpRequests((authorize) -> {
             authorize.requestMatchers("/auth/**").authenticated().anyRequest().permitAll();
         });
-
         return http.build();
     }
 

@@ -9,17 +9,16 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "order")
-public class Order {
+@Table(name = "order_form")
+public class OrderForm {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @OneToMany
-    @JoinColumn(name = "order_items")
-    private List<OrderItem> orderItems;
+    @Column(name = "form_status")
+    private String form_status;
 
     @Column(name = "create_time")
     private LocalDateTime create_time;

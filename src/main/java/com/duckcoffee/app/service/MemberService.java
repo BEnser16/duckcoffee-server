@@ -4,7 +4,6 @@ package com.duckcoffee.app.service;
 import com.duckcoffee.app.dao.UserRepository;
 import com.duckcoffee.app.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 

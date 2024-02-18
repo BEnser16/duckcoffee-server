@@ -1,6 +1,7 @@
 package com.duckcoffee.app.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -28,5 +29,6 @@ public class MenuItem {
 
     @Column(name = "category")
     private String category;
+
 
 }

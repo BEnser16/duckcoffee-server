@@ -19,6 +19,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping(path = "/api/auth/member")
+@CrossOrigin("http://localhost:3000")
 public class MemberController {
 
     @Autowired
@@ -94,7 +95,7 @@ public class MemberController {
 
             // 身份验证成功后的处理
             return ResponseEntity.status(HttpStatus.OK).body(Map.of(
-                    "status", true, "token", loginToken, "message", "登入成功"
+                    "status", true, "token", loginToken, "message", "登入成功" , "email" , email
             ));
         } catch (AuthenticationException ex) {
             // 处理身份验证失败

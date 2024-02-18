@@ -13,12 +13,9 @@ public class OrderItem {
     @Column(name = "id")
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "menu_item")
+    @ManyToOne
+    @JoinColumn(name = "menu_item_id", referencedColumnName = "id")
     private MenuItem menuItem;
-
-    @Column(name = "available")
-    private boolean available;
 
     @Column(name = "quantity")
     private int quantity;
@@ -31,6 +28,10 @@ public class OrderItem {
 
     @Column(name = "ice")
     private String ice;
+
+    @ManyToOne
+    @JoinColumn(name = "orderform_id" , referencedColumnName = "id")
+    private OrderForm orderForm;
 
 
 }
