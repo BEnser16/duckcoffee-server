@@ -1,6 +1,7 @@
 package com.duckcoffee.app.controller;
 
 
+import com.duckcoffee.app.dao.UserRepository;
 import com.duckcoffee.app.entity.User;
 import com.duckcoffee.app.service.MemberService;
 import com.duckcoffee.app.utils.JwtUtil;
@@ -32,6 +33,9 @@ public class MemberController {
     @Autowired
     public JwtUtil jwtUtil;
 
+    @Autowired
+    UserRepository userRepository;
+
     @PostMapping(path = "/register")
     public ResponseEntity<Object> register(@RequestBody User user) {
         try {
@@ -52,7 +56,7 @@ public class MemberController {
 
     }
 
-    @GetMapping (path = "/getuser")
+    @GetMapping (path = "/test")
     public ResponseEntity<Object> touch() {
         try {
             System.out.println("touch get test api!!!");
@@ -69,6 +73,31 @@ public class MemberController {
             );
 
         }
+
+    }
+
+    @GetMapping(path = "get-by-email")
+    public ResponseEntity<Object> getUserByEmail(@RequestParam("email") String email) {
+        User findUser = userRepository.findByEmail(email);
+
+        if(findUser != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(findUser);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("can not find user. ");
+        }
+    }
+
+    @PutMapping(path = "update-user")
+    public ResponseEntity<Object> updateUser(@RequestParam String email
+    , @RequestParam String userName , @RequestParam String userImg) {
+        User findUser = userRepository.findByEmail(email);
+
+        findUser.setImg(userImg);
+        findUser.setName(userName);
+
+
+        userRepository.save(findUser);
+        return ResponseEntity.status(HttpStatus.OK).body(findUser);
 
     }
 

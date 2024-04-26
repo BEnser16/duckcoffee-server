@@ -4,7 +4,7 @@ import com.duckcoffee.app.dao.ReservationRepository;
 import com.duckcoffee.app.dao.TableSeatRepository;
 import com.duckcoffee.app.entity.Reservation;
 import com.duckcoffee.app.entity.TableSeat;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -14,13 +14,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class ReservationService {
 
-    @Autowired
-    private ReservationRepository reservationRepository;
+    private final ReservationRepository reservationRepository;
 
-    @Autowired
-    private TableSeatRepository tableSeatRepository;
+    private final TableSeatRepository tableSeatRepository;
 
 
 

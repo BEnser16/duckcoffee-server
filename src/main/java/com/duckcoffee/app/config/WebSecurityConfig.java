@@ -1,7 +1,7 @@
 package com.duckcoffee.app.config;
 
 import com.duckcoffee.app.service.DatabaseUserDetailService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,18 +10,17 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 
-import java.util.Arrays;
-
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class WebSecurityConfig {
 
-    @Autowired
-    public DatabaseUserDetailService databaseUserDetailService;
+    private final DatabaseUserDetailService databaseUserDetailService;
 
     @Bean
     public AuthenticationProvider daoAuthenticationProvider() {
@@ -49,10 +48,14 @@ public class WebSecurityConfig {
     // 定義 api 輸入規則
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf((csrf) -> csrf.disable());
-        http.authorizeHttpRequests((authorize) -> {
-            authorize.requestMatchers("/auth/**").authenticated().anyRequest().permitAll();
-        });
+        http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(
+            authorizationManagerRequestMatcherRegistry ->
+            authorizationManagerRequestMatcherRegistry.requestMatchers("/auth/**").authenticated()
+                    .anyRequest().permitAll()
+        );
+
+
+
         return http.build();
     }
 

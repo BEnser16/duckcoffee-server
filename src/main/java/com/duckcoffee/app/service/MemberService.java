@@ -3,18 +3,17 @@ package com.duckcoffee.app.service;
 
 import com.duckcoffee.app.dao.UserRepository;
 import com.duckcoffee.app.entity.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class MemberService {
 
-    @Autowired
-    public BCryptPasswordEncoder bCryptPasswordEncoder;
+    public final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Autowired
-    public UserRepository userRepository;
+    public final UserRepository userRepository;
 
     public void createUser(User user) throws Exception {
 
