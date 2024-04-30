@@ -1,0 +1,32 @@
+version: '3'
+services:
+  duck-api:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - spring.datasource.url=jdbc:mysql://duck-db:3306/duckcoffeedatabase?useSSL=false&useUnicode=yes&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&serverTimezone=UTC
+
+    depends_on:
+      - duck-db
+    networks:
+      - duck_network
+  duck-db:
+    image: mysql:8.1.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root1234
+      MYSQL_DATABASE: duckcoffeedatabase
+      MYSQL_USER: ryan
+      MYSQL_PASSWORD: ryandb
+    ports:
+      - "3307:3306"
+    expose:
+      - "3307"
+    volumes:
+      - ./db-data:/var/lib/mysql
+    networks:
+      - duck_network
+
+networks:
+  duck_network:
+
