@@ -4,13 +4,17 @@ services:
     build: .
     ports:
       - "8080:8080"
+    restart: always
     environment:
       - spring.datasource.url=jdbc:mysql://duck-db:3306/duckcoffeedatabase?useSSL=false&useUnicode=yes&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&serverTimezone=UTC
-
+    volumes:
+      - ./src/main/resources/static/img:/app/img
     depends_on:
       - duck-db
     networks:
       - duck_network
+
+
   duck-db:
     image: mysql:8.1.0
     environment:
@@ -18,12 +22,15 @@ services:
       MYSQL_DATABASE: duckcoffeedatabase
       MYSQL_USER: ryan
       MYSQL_PASSWORD: ryandb
+      MYSQL_CHARSET: utf8mb4
     ports:
       - "3307:3306"
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     expose:
       - "3307"
     volumes:
       - ./db-data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - duck_network
 

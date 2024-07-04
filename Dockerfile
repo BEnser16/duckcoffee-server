@@ -7,6 +7,6 @@ WORKDIR /duckserver
 COPY target/duckcoffee-0.0.1-SNAPSHOT.jar /duckserver
 
 # 指定容器執行的命令
-CMD["java", "-jar", "duckcoffee-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "duckcoffee-0.0.1-SNAPSHOT.jar"]
 
 LABEL authors="ryandai"

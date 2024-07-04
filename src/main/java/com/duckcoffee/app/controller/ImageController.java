@@ -1,7 +1,6 @@
 package com.duckcoffee.app.controller;
 
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,8 +15,7 @@ import java.nio.file.Paths;
 @CrossOrigin("http://localhost:3000")
 public class ImageController {
 
-    @Value("${img.directory}")
-    private String imgDirectory;
+    private static final String imgDirectory = "../app/img";
 
     @PostMapping("/upload")
     public String ImageUpload(@RequestParam("file") MultipartFile imageFile) {
@@ -31,10 +29,10 @@ public class ImageController {
             // 保存到 file system
             Files.write(path , imageFile.getBytes());
 
-            System.out.println("/api/img/" + fileName);
+            System.out.println("/app/img" + fileName);
 
             // 返回文件的URL
-            return "/img/" + fileName;
+            return "/app/img/" + fileName;
 
         } catch (IOException exception) {
             exception.printStackTrace();
